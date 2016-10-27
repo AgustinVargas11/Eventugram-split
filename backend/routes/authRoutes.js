@@ -34,7 +34,7 @@ authRoute.route('/signup')
                         })
                     } else if (!existingUser) {
                         var newUser = new User(req.body);
-
+                        newUser.following.push('5811ff90a7eea95261661f96');
                         newUser.save(function (err, savedUser) {
                             if (err) return res.status(500).send(err);
                             res.send(savedUser);
