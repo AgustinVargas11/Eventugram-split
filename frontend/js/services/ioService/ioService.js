@@ -20,7 +20,6 @@ app.service('io', function () {
     };
 
     this.joinPrivateChat = function(conversationId) {
-        console.log(conversationId)
         socket.emit('privateChat', {chat: conversationId})
     }
 });

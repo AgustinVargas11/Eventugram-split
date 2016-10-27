@@ -6,14 +6,10 @@ app.controller('NotificationController', ['$scope', '$location', 'ProfileService
     ProfileService.getUserProfile()
         .then(function (response) {
             $scope.notifications = response.notifications;
-            console.log($scope.notifications)
         });
 
     $scope.sawNotification = function (id) {
-        NotificationService.markAsSeen(id)
-            .then(function (response) {
-                console.log(response)
-            });
+        NotificationService.markAsSeen(id);
     };
 
     $scope.viewPost = function (id) {

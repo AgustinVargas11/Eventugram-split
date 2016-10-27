@@ -28,10 +28,14 @@ app.service('PostService', ['$http', function ($http) {
         return $http.put('/api/post/' + id + '/like/');
     };
 
-    this.deletePost = function(id) {
+    this.deletePost = function (id) {
         return $http.delete('/api/post/delete/' + id)
-            .then(function(response) {
+            .then(function (response) {
                 return response.data;
             })
     };
+
+    this.deleteComment = function (postId, commentId) {
+        return $http.delete('/api/post/' + postId + '/comment/' + commentId)
+    }
 }]);

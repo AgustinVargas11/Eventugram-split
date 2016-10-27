@@ -33,6 +33,10 @@ label {
     padding-bottom: .2em !important;
 }
 
+.no-content {
+    color: #BFBFBF;
+}
+
 /*======================================
                  NAVBAR
 ======================================*/
@@ -92,7 +96,7 @@ md-nav-bar md-nav-ink-bar {
 }
 
 md-input-container {
-    margin: .5em;
+    margin: .22em;
 }
 
 .new-message input,
@@ -215,7 +219,7 @@ md-input-container {
     min-height: 200px;
     border: 1px solid #bbb;
     background-color: #ddd;
-    background: url('./assets/images/Logo.png') no-repeat;
+    background: url('assets/images/Logo.png') no-repeat;
     -webkit-background-size: 30%;
     background-size: 30%;
     background-position: center;
@@ -382,6 +386,22 @@ md-card {
 .new-post label {
     padding-left: 1.3em !important;
     margin-bottom: -15px;
+}
+
+.delete {
+    float: right;
+    color: red;
+    padding: .25em;
+    cursor: pointer;
+}
+
+.chosen-comment {
+    background: rgba(255, 0, 0, .5);
+    border-radius: .25em !important;
+}
+
+.delete > i {
+    font-size: 1.2em;
 }
 
 /*======================================

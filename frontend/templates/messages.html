@@ -2,7 +2,7 @@
      flex-offset-gt-xs="30" flex-gt-sm="40" flex-offset-gt-sm="30">
     <div flex-gt-sm="50" flex>
 
-        <md-toolbar layout="row" class="md-primary md-hue-2"  md-whiteframe="1">
+        <md-toolbar layout="row" class="md-primary md-hue-2" md-whiteframe="1">
             <div class="md-toolbar-tools" layout-align="end center">
                 <div flex="50">
                     <h3 class="title">Messages</h3>
@@ -15,6 +15,9 @@
         </md-toolbar>
         <md-content md-whiteframe="z1">
             <md-list flex class="message">
+                <div class="no-content" ng-if="conversations.length < 1" layout layout-align="center center">
+                    <h4>Nothing to show</h4>
+                </div>
                 <md-list-item class="md-2-line conversation" ng-repeat="conversation in conversations"
                               ng-click="viewConversation(conversation._id)"
                               ng-init="whoIsRecipient(conversation)">

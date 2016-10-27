@@ -10,33 +10,35 @@ app.controller('SinglePostController', ['$scope', '$routeParams', '$timeout', '$
         PostService.getOnePost($routeParams.postId)
             .then(function (response) {
                 $scope.post = response;
-                $scope.didUserLike = function (likes) {
-                    if (likes.indexOf(userId) >= 0)
-                        return true;
-                    else
-                        return false;
-                };
-
-            })
+            });
     }());
+
+    $scope.addComment = function (post, id, index) {
+        PostService.addComment(post.newComment, id)
+            .then(function (response) {
+                if (response) {
+                    var comment = {
+                        _id: response._id,
+                        comment: response.comment,
+                        user: {
+                            _id: response.user,
+                            username: UserService.getUsername()
+                        }
+                    };
+                    $scope.posts[index].comments.push(comment);
+                }
+            });
+        post.newComment = '';
+    };
 
     // hide large heart
     function hideHeart(post) {
         return post.doubleClick = false;
     }
 
-    $scope.addComment = function (post, id) {
-        PostService.addComment(post.newComment, id)
-            .then(function (response) {
-                if (response) {
-                    var comment = {
-                        user: {username: UserService.getUsername()},
-                        comment: response
-                    };
-                    $scope.post.comments.push(comment);
-                }
-            });
-        post.newComment = '';
+    $scope.didUserLike = function (likes) {
+        var user = UserService.getUserId();
+        return (likes.indexOf(user) >= 0);
     };
 
     $scope.likePost = function (post, id) {

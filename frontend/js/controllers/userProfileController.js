@@ -10,6 +10,7 @@ app.controller('UserProfileController', ['$scope', '$routeParams', '$location', 
         ProfileService.getOtherUsersProfile($routeParams.userId)
             .then(function (user) {
                 $scope.user = user;
+                console.log(user)
             });
     };
     $scope.getUser();

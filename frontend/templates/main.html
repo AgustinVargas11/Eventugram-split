@@ -2,12 +2,10 @@
 
 <div class="md-padding" layout="column">
     <div class="main">
-        <div ng-if="posts.length < 1" layout layout-padding layout-margin>
-            <md-divider></md-divider>
-            <h2>Post something and go make some friends!</h2>
-            <md-divider></md-divider>
+        <div ng-if="posts.length < 1" layout layout-align="center center" layout-padding layout-margin>
+            <h2 class="no-content">Post something and go make some friends!</h2>
         </div>
-        <md-card ng-repeat="post in posts track by $index">
+        <md-card ng-repeat="post in posts track by $index" ng-init="post.thisPost = $index">
             <md-card-header layout>
                 <md-card-avatar flex="20" ng-click="goToProfile(post.user._id)">
                     <img class="user-thumb" ng-src="{{post.user.profileImageRaw}}" alt="user profile image"/>
@@ -36,7 +34,6 @@
                     </md-menu>
                 </div>
 
-
                 <!-- /menu -->
             </md-card-header>
             <i class="heart-overlay material-icons liked-transparent" ng-if="post.doubleClick">favorite</i>
@@ -61,12 +58,36 @@
                 </p>
                 <div layout="column">
                     <a class="load" ng-show="post.comments.length > 3"
-                       ng-click="post.comment.showAll=!post.comment.showAll">Load Previous Comments</a>
-                    <span ng-repeat="comment in post.comments | limitTo: 3 : -3" ng-init="post.comment.showAll = false"
-                          ng-if="!post.comment.showAll" class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>
-                    <span ng-repeat="comment in post.comments track by $index" ng-if="post.comment.showAll"
-                          class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>
+                       ng-click="post.comment.showAll=!post.comment.showAll">
+                        Load Previous Comments
+                    </a>
+
+                    <div ng-repeat="comment in post.comments | limitTo: 3 : -3 track by $index" ng-init="post.comment.showAll = false"
+                         ng-if="!post.comment.showAll" class="comment"
+                         ng-class="{'chosen-comment': commentOptions && userId === comment.user._id}"
+                         ng-click="commentOptions=!commentOptions">
+
+                        <b>{{comment.user.username}}</b> {{comment.comment}}
+
+                        <div class="delete" ng-if="commentOptions && userId === comment.user._id"
+                             ng-click="deleteComment(post._id, comment._id, post.thisPost, $index, true)">
+                            <i class="material-icons">close</i>
+                        </div>
+                    </div>
+
+                    <div ng-repeat="comment in post.comments track by $index" ng-if="post.comment.showAll"
+                         class="comment" ng-class="{'chosen-comment': commentOptions && userId === comment.user._id}"
+                         ng-click="commentOptions=!commentOptions">
+
+                        <b>{{comment.user.username}}</b> {{comment.comment}}
+
+                        <div class="delete" ng-if="commentOptions && userId === comment.user._id"
+                             ng-click="deleteComment(post._id, comment._id, post.thisPost, $index)">
+                            <i class="material-icons">close</i>
+                        </div>
+                    </div>
                 </div>
+
                 <md-divider layout-margin></md-divider>
                 <form name="commentForm" ng-submit="addComment(post, post._id, $index)" layout>
                     <input type="text" placeholder="add a comment" ng-model="post.newComment.comment"

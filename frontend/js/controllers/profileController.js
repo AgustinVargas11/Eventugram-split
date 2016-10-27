@@ -8,10 +8,11 @@ app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', '
         ProfileService.getUserProfile()
             .then(function (response) {
                 $scope.user = response;
-                $scope.user.bio = $scope.user.bio || 'add a bio';
+                $scope.user.bio = $scope.user.bio;
                 $scope.posts = response.posts;
             });
     }
+
     getUserProfile();
 
     $scope.openDialog = function (ev, imageUrl) {

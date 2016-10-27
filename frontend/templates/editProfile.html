@@ -6,12 +6,14 @@
         <form name="editForm" ng-submit="editProfile()">
             <div layout="column" layout-align="center center" layout-padding class="md-whiteframe-3dp">
 
-                <input type="text" name="username" id="usernameEdit" ng-model="editUser.username" placeholder="{{user.username}}">
+                <input type="text" name="username" id="usernameEdit" ng-model="editUser.username"
+                       placeholder="{{user.username}}">
                 <p ng-show="usernameError" style="color: firebrick; font-size: .8em;">
                     <small>{{usernameError}}</small>
                 </p>
                 <input type="text" name="email" id="emailEdit" ng-model="editUser.email" placeholder="{{user.email}}">
-                <input type="text" name="bio" id="bioEdit" ng-model="editUser.bio" placeholder="{{user.bio}}">
+                <input type="text" name="bio" id="bioEdit" ng-model="editUser.bio" ng-init="default = 'add bio'"
+                       placeholder="{{user.bio || default}}">
 
                 <md-button class="md-raised md-accent" type="submit" ng-disabled="!editUser">Make Changes
                 </md-button>

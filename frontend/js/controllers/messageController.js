@@ -22,7 +22,6 @@ app.controller('MessageController', ['$scope', '$location', 'MessageService', 'P
     }
 
     $scope.whoIsRecipient = function (conversation) {
-        console.log(conversation)
         var user1 = conversation.users[0];
         var user2 = conversation.users[1];
 
@@ -55,7 +54,6 @@ app.controller('MessageController', ['$scope', '$location', 'MessageService', 'P
             .then(function (response) {
                 $location.path('/conversation/' + response._id);
                 getConversations();
-                console.log(response);
             });
     };
 

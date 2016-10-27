@@ -32,7 +32,6 @@ app.use('/api/post', postRoutes);
 app.use('/api/message', messageRoutes);
 app.use('/api/notification', notificationRoute);
 
-
 mongoose.connect(config.database, function () {
     console.log('Connected to mongodb');
 });
@@ -55,6 +54,5 @@ io.on('connection', function (socket) {
     socket.on('newMessage', function (message, chat) {
         io.sockets.in(chat).emit('incomingMessage', message);
     });
-
 });
 

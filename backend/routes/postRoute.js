@@ -109,7 +109,7 @@ postRoute.route('/:postId/comment')
                         user.notifications = user.notifications.slice(0, 14);
                     user.save();
                 });
-                return res.send(savedComment.comments[savedComment.comments.length - 1].comment);
+                return res.send(savedComment.comments[savedComment.comments.length - 1]);
             })
         });
     });
@@ -166,6 +166,17 @@ postRoute.route('/delete/:id')
                     if (err) return res.status(500).send(err);
                 })
             });
+            res.send(post);
+        });
+    });
+
+postRoute.route('/:postId/comment/:commentId')
+    .delete(function(req, res) {
+        Post.findById(req.params.postId, function(err, post) {
+           if (err) return res.status(500).send(err);
+
+            post.comments.remove(req.params.commentId);
+            post.save();
             res.send(post);
         });
     });

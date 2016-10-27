@@ -10,6 +10,9 @@
 
         <md-content class="notification-container">
             <md-list class="md-dense" flex>
+                <div class="no-content" ng-if="notifications.length < 1" layout layout-align="center center">
+                    <h4>Nothing to show</h4>
+                </div>
                 <md-list-item class="md-3-line md-long-text" ng-repeat="notification in notifications"
                               ng-init="($last) ? sawNotification(notification._id) : false">
                     <div class="md-list-item-text">

@@ -11,8 +11,10 @@
 
             <md-list class="fixedRows">
                 <md-subheader class="md-no-sticky">Following</md-subheader>
-                <md-list-item class="md-2-line contact-item selected"
-                              ng-repeat="user in allUsers | filter : {username: query}"
+                <div class="no-content" ng-if="allUsers.length < 1" layout layout-align="center center">
+                    <h4>Nothing to show</h4>
+                </div>
+                <md-list-item class="md-2-line contact-item selected" ng-repeat="user in allUsers | filter : {username: query}"
                               ng-click="selectUser(user)">
                     <img ng-src="{{user.profileImageRaw}}" class="user-thumb" alt="{{user.username}}"/>
                     <div class="md-list-item-text compact" layout-padding>

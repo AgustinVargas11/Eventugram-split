@@ -7,7 +7,6 @@ app.controller('FriendsController', ['$scope', 'ProfileService', function ($scop
         ProfileService.getFollowing()
             .then(function (response) {
                 $scope.user = response;
-                console.log($scope.user);
             });
     };
 
