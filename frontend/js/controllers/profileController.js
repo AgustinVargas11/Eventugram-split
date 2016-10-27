@@ -8,7 +8,6 @@ app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', '
         ProfileService.getUserProfile()
             .then(function (response) {
                 $scope.user = response;
-                $scope.user.bio = $scope.user.bio;
                 $scope.posts = response.posts;
             });
     }

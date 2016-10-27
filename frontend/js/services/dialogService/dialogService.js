@@ -23,7 +23,7 @@ app.service('DialogService', ['$mdDialog', 'Upload', function ($mdDialog) {
     };
 
     this.newPost = function (ev) {
-        var template = '/js/services/dialogService/dialogTemplates/newPost.html';
+        var template = '/js/services/dialogService/dialogTemplates/newpost.html';
         self.url = '/api/post/';
         return $mdDialog.show({
             controller: DialogController,
