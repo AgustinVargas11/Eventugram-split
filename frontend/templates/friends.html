@@ -1,10 +1,49 @@
+<div class="md-padding" layout="column" flex-xs flex-gt-xs="40"
+     flex-offset-gt-xs="30" flex-gt-sm="30" flex-offset-gt-sm="35">
+    <div flex-gt-sm="50" flex md-whiteframe="z1">
 
-<div layout="column" layout-padding ng-cloak id="friends" flex-gt-sm="50" flex-offset-gt-sm="25">
-  <h1 style="text-align:center">Your Friends</h1>
-  <div layout layout-wrap>
-    <div ng-repeat="friend in user.following"flex="33">
-      <h2>{{friend.username}}</h2>
-      <img class="profile-picture" ng-src="{{friend.profileImageRaw}}"
+        <md-toolbar layout="row" class="md-primary md-hue-2" md-whiteframe="1">
+            <div class="md-toolbar-tools" layout-align="end center">
+                <div flex="50">
+                    <h3 class="title" ng-if="showFollowing">Following</h3>
+                    <h3 class="title" ng-if="!showFollowing">Followers</h3>
+                </div>
+            </div>
+            <div class="inset" ng-cloak>
+                <md-switch ng-model="showFollowing" aria-label="Switch 1" class="md-primary md-hue-3">
+                </md-switch>
+            </div>
+        </md-toolbar>
+        <md-content class="follower-container">
+            <md-list flex class="message" ng-if="showFollowing">
+                <md-list-item class="md-2-line conversation" ng-repeat="following in user.following"
+                              ng-click="goToProfile(following._id)">
+
+                    <img ng-src="{{following.profileImageRaw}}" class="user-thumb md-padding"
+                         alt="pictures of {{following.username}}"/>
+
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ following.username }}</h3>
+                    </div>
+
+                </md-list-item>
+                <md-divider></md-divider>
+            </md-list>
+
+            <md-list flex class="message follower-container"" ng-if="!showFollowing">
+                <md-list-item class="md-2-line conversation" ng-repeat="follower in user.followers"
+                              ng-click="goToProfile(follower._id)">
+
+                    <img ng-src="{{follower.profileImageRaw}}" class="user-thumb md-padding"
+                         alt="conversation between {{follower.username}} and {{follower.username}}"/>
+
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ follower.username }}</h3>
+                    </div>
+
+                </md-list-item>
+                <md-divider></md-divider>
+            </md-list>
+        </md-content>
     </div>
-  </div>
 </div>

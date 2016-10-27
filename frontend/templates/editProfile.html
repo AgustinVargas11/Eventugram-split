@@ -1,29 +1,20 @@
-<div layout layout-align="center start" layout-padding ng-cloak layout-fill id="profile">
-    <md-content flex="100" flex-gt-sm="50">
-        <p><small><a href="#/profile">cancel</a></small></p>
+<div layout layout-align="center start" layout-padding ng-cloak id="profile">
+    <md-content flex="100" flex-gt-sm="40">
+        <p>
+            <small><a href="#/profile">cancel</a></small>
+        </p>
         <form name="editForm" ng-submit="editProfile()">
-            <div layout="column" layout-align="start center" layout-padding class="md-whiteframe-3dp">
+            <div layout="column" layout-align="center center" layout-padding class="md-whiteframe-3dp">
 
-                <md-input-container>
-                    <label for="usernameEdit">username</label>
-                    <input type="text" name="username" id="usernameEdit" ng-model="editUser.userDisplayName" required>
-                    <p ng-show="usernameError" style="color: firebrick; font-size: .8em;">
-                        <small>{{usernameError}}</small>
-                    </p>
-                </md-input-container>
+                <input type="text" name="username" id="usernameEdit" ng-model="editUser.username" placeholder="{{user.username}}">
+                <p ng-show="usernameError" style="color: firebrick; font-size: .8em;">
+                    <small>{{usernameError}}</small>
+                </p>
+                <input type="text" name="email" id="emailEdit" ng-model="editUser.email" placeholder="{{user.email}}">
+                <input type="text" name="bio" id="bioEdit" ng-model="editUser.bio" placeholder="{{user.bio}}">
 
-                <md-input-container>
-                    <label for="emailEdit">email</label>
-                    <input type="text" name="email" id="emailEdit" ng-model="editUser.email" required>
-                </md-input-container>
-
-                <md-input-container>
-                    <label for="bio">bio</label>
-                    <textarea type="text" name="bio" id="bioEdit" ng-click="editUser.bio" required></textarea>
-
-                </md-input-container>
-
-                <md-button class="md-raised md-accent" type="submit" ng-disabled="editForm.$invalid">Make Changes</md-button>
+                <md-button class="md-raised md-accent" type="submit" ng-disabled="!editUser">Make Changes
+                </md-button>
 
             </div>
         </form>

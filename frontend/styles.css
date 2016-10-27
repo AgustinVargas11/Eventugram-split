@@ -15,8 +15,22 @@ a {
     font-size: .65em !important;
 }
 
-md-button {
-    color: white;
+button.md-button.md-raised:not(.md-primary) {
+    color: white !important;
+}
+
+body,
+md-content {
+    background: #fff !important;
+}
+
+md-dialog {
+    min-width: 240px;
+}
+
+label {
+    padding-left: .5em !important;
+    padding-bottom: .2em !important;
 }
 
 /*======================================
@@ -81,12 +95,31 @@ md-input-container {
     margin: .5em;
 }
 
+.new-message input,
+.new-message textarea,
+#profile input,
+#profile textarea,
+.login input,
+.login textarea,
+.sign-up input,
+.sign-up textarea,
+.new-post textarea {
+    box-shadow: inset 1px 1px 2px -1px rgba(0, 0, 0, 0.15);
+    border: 1px solid #CFCFCF !important;
+    border-radius: .25em !important;
+    background: rgb(250, 250, 250) !important;
+}
+
 /*======================================
              Profile
 ======================================*/
 
 #profile {
-    background-color: #f7f7f7;
+    background-color: #fff;
+}
+
+#profile input {
+    margin: 1em;
 }
 
 .thumb,
@@ -291,7 +324,7 @@ md-card {
 }
 
 .main .like {
-    margin-left: -20px;
+    margin-left: -15px;
 }
 
 .load {
@@ -346,9 +379,19 @@ md-card {
     border-radius: 50% !important;
 }
 
+.new-post label {
+    padding-left: 1.3em !important;
+    margin-bottom: -15px;
+}
+
 /*======================================
                  MESSAGES
 ======================================*/
+
+textarea {
+    min-height: 80px !important;
+    min-width: 220px !important;
+}
 
 .chip {
     width: 220px;
@@ -374,13 +417,17 @@ md-card {
 }
 
 .messages {
-    height: 80vh;
+    height: 60vh;
     overflow: scroll;
     padding-bottom: .3em;
 }
 
 .messages::-webkit-scrollbar {
     display: none;
+}
+
+.send-message {
+    color: #7f7f7f;
 }
 
 .chat {
@@ -391,7 +438,7 @@ md-card {
     border-radius: .25em 0 0 .25em;
 }
 
-.conversation {
+.messages {
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
 }
@@ -454,6 +501,52 @@ md-card {
     padding: 8px;
 }
 
+.read {
+    position: absolute;
+    bottom: -3px;
+    right: 5px;
+    color: #bbb;
+    max-height: 25px;
+    padding: .75em 0 0 0;
+}
+
+/*======================================
+              Notifications
+======================================*/
+
+.notification {
+    width: 10px;
+    height: 10px;
+    background: red;
+    position: absolute;
+    top: 5px;
+    right: 43%;
+    border-radius: 50%;
+}
+
+.follower-container,
+.notification-container {
+    max-height: 500px !important;
+    overflow: scroll;
+}
+
+.follower-container::-webkit-scrollbar,
+.notification-container::-webkit-scrollbar {
+    display: none;
+}
+
+.post-thumb {
+    min-width: 50px;
+    width: 60px;
+    min-height: 50px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.notification-text {
+    font-size: .9em !important;
+}
+
 /*======================================
                  MQS
 ======================================*/
@@ -503,7 +596,18 @@ md-card {
     }
 
     .messages {
-        height: 60vh;
+        height: 50vh;
+    }
+
+    .sign-up {
+        background: url("http://res.cloudinary.com/av11/image/upload/v1477358169/nature-laptop-outside-macbook_x3eab9.jpg") no-repeat;
+        -webkit-background-size: 50%;
+        background-size: 50%;
+    }
+
+    .sub-sign-up {
+        background: linear-gradient(0deg, #fff 40%, transparent 70%, #fff 100%),
+        linear-gradient(90deg, #fff 5%, transparent 25%, #fff 40%);
     }
 }
 

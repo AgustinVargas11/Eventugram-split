@@ -1,78 +1,80 @@
-<div layout="column" layout-align="space-between center" layout-padding class="sign-up">
-    <md-content class="md-whiteframe-4dp" flex-offset-gt-md="30" layout-margin>
-        <h1 class="landing-title txt-center">Eventugram</h1>
-        <h4 class="txt-center">Share photos and videos with your friends</h4>
-        <form name="signupForm" ng-submit="signup()">
-            <div layout="column">
+<div class="sign-up">
+    <div layout="column" layout-align="space-between center" layout-padding class="sub-sign-up">
+        <md-content class="md-whiteframe-4dp" flex-offset-gt-md="30" layout-margin>
+            <h1 class="landing-title txt-center">Eventugram</h1>
+            <h4 class="txt-center">Share photos and videos with your friends</h4>
+            <form name="signupForm" ng-submit="signup()">
+                <div layout="column">
 
-                <md-input-container>
-                    <label>name</label>
-                    <input type="text" name="fullName" ng-model="newUser.fullName" ng-minlength="5"
-                           ng-maxlength="20" autocomplete="off" required>
-                    <div ng-messages="signupForm.fullName.$error" style="color:maroon" role="alert">
-                        <div ng-message="minlength">Your input is too short</div>
-                        <div ng-message="maxlength">Your input is too long</div>
-                    </div>
-                </md-input-container>
+                    <md-input-container>
+                        <label>name</label>
+                        <input type="text" name="fullName" ng-model="newUser.fullName" ng-minlength="5"
+                               ng-maxlength="20" autocomplete="off" required>
+                        <div ng-messages="signupForm.fullName.$error" style="color:maroon" role="alert">
+                            <div ng-message="minlength">Your input is too short</div>
+                            <div ng-message="maxlength">Your input is too long</div>
+                        </div>
+                    </md-input-container>
 
-                <md-input-container>
-                    <label>username</label>
-                    <input type="text" name="username" ng-model="newUser.username" ng-minlength="5"
-                           ng-maxlength="15"
-                           autocomplete="off" required>
-                    <div ng-messages="signupForm.username.$error" style="color:maroon" role="alert">
-                        <div ng-message="minlength">Username must be at least 5 characters long</div>
-                        <div ng-message="maxlength">Username must be less than 15 characters</div>
-                    </div>
-                    <p ng-show="usernameError" style="color: firebrick; font-size: .8em;">
-                        <small>{{usernameError}}</small>
+                    <md-input-container>
+                        <label>username</label>
+                        <input type="text" name="username" ng-model="newUser.username" ng-minlength="5"
+                               ng-maxlength="15"
+                               autocomplete="off" required>
+                        <div ng-messages="signupForm.username.$error" style="color:maroon" role="alert">
+                            <div ng-message="minlength">Username must be at least 5 characters long</div>
+                            <div ng-message="maxlength">Username must be less than 15 characters</div>
+                        </div>
+                        <p ng-show="usernameError" style="color: firebrick; font-size: .8em;">
+                            <small>{{usernameError}}</small>
+                        </p>
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>email</label>
+                        <input type="email" name="email" ng-model="newUser.email" ng-minlength="5" required
+                               pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" autocomplete="off">
+                        <div ng-messages="signupForm.email.$error" style="color:maroon" role="alert">
+                            <div ng-message="minlength">Your input is too short</div>
+                            <div ng-message="pattern">Please enter a valid email address</div>
+                        </div>
+                        <p ng-show="emailError" style="color: firebrick; font-size: .8em;">
+                            <small>{{emailError}}</small>
+                        </p>
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>password</label>
+                        <input type="password" name="password" ng-model="newUser.password" ng-minlength="8"
+                               ng-maxlength="12" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+                        <div ng-messages="signupForm.password.$error" style="color:maroon" role="alert">
+                            <div ng-message="minlength">Your password is too short</div>
+                            <div ng-message="maxlength">Your password is too long</div>
+                            <div ng-message="pattern">Must have at least one number and letter</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>confirm password</label>
+                        <input type="password" name="passwordCheck" ng-model="check.password"
+                               pattern="\b{{newUser.password}}\b" required>
+                        <div ng-messages="signupForm.passwordCheck.$error" style="color:maroon" role="alert">
+                            <div ng-message="pattern">Passwords must match</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-button class="md-raised md-accent" type="submit" ng-disabled="signupForm.$invalid">Continue
+                    </md-button>
+                    <p class="txt-center">
+                        <small layout-padding>By signing up, you agree to our Terms & Privacy Policy.</small>
                     </p>
-                </md-input-container>
-
-                <md-input-container>
-                    <label>email</label>
-                    <input type="email" name="email" ng-model="newUser.email" ng-minlength="5" required
-                           pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" autocomplete="off">
-                    <div ng-messages="signupForm.email.$error" style="color:maroon" role="alert">
-                        <div ng-message="minlength">Your input is too short</div>
-                        <div ng-message="pattern">Please enter a valid email address</div>
-                    </div>
-                    <p ng-show="emailError" style="color: firebrick; font-size: .8em;">
-                        <small>{{emailError}}</small>
-                    </p>
-                </md-input-container>
-
-                <md-input-container>
-                    <label>password</label>
-                    <input type="password" name="password" ng-model="newUser.password" ng-minlength="8"
-                           ng-maxlength="12" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
-                    <div ng-messages="signupForm.password.$error" style="color:maroon" role="alert">
-                        <div ng-message="minlength">Your password is too short</div>
-                        <div ng-message="maxlength">Your password is too long</div>
-                        <div ng-message="pattern">Must have at least one number and letter</div>
-                    </div>
-                </md-input-container>
-
-                <md-input-container>
-                    <label>confirm password</label>
-                    <input type="password" name="passwordCheck" ng-model="check.password"
-                           pattern="\b{{newUser.password}}\b" required>
-                    <div ng-messages="signupForm.passwordCheck.$error" style="color:maroon" role="alert">
-                        <div ng-message="pattern">Passwords must match</div>
-                    </div>
-                </md-input-container>
-
-                <md-button class="md-raised md-accent" type="submit" ng-disabled="signupForm.$invalid">Continue
-                </md-button>
-                <p class="txt-center">
-                    <small layout-padding>By signing up, you agree to our Terms & Privacy Policy.</small>
-                </p>
-            </div>
-        </form>
-    </md-content>
-    <md-content class="md-whiteframe-4dp" flex-offset-gt-md="30" layout-padding>
-        <h5 class="txt-center">Have an account? <a href="#/login">Log in</a></h5>
-    </md-content>
+                </div>
+            </form>
+        </md-content>
+        <md-content class="md-whiteframe-4dp" flex-offset-gt-md="30" layout-padding>
+            <h5 class="txt-center">Have an account? <a href="#/login">Log in</a></h5>
+        </md-content>
+    </div>
 </div>
 
 

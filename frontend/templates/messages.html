@@ -1,29 +1,33 @@
-<div class="md-padding" layout="column" flex-xs flex-gt-xs="50"
-     flex-offset-gt-xs="25" flex-gt-sm="40" flex-offset-gt-sm="30">
+<div class="md-padding" layout="column" flex-xs flex-gt-xs="40"
+     flex-offset-gt-xs="30" flex-gt-sm="40" flex-offset-gt-sm="30">
     <div flex-gt-sm="50" flex>
 
-        <md-toolbar layout="row" class="md-accent md-hue-2">
+        <md-toolbar layout="row" class="md-primary md-hue-2"  md-whiteframe="1">
             <div class="md-toolbar-tools" layout-align="end center">
                 <div flex="50">
                     <h3 class="title">Messages</h3>
                 </div>
                 <div flex="50" layout layout-align="end center">
                     <md-button class="md-fab md-raised" layout-padding ng-href="#/newmessage">
-                        <i class="material-icons">add</i></md-button>
+                        <i class="material-icons send-message">comment</i></md-button>
                 </div>
             </div>
         </md-toolbar>
-        <md-content>
+        <md-content md-whiteframe="z1">
             <md-list flex class="message">
                 <md-list-item class="md-2-line conversation" ng-repeat="conversation in conversations"
-                              ng-click="viewConversation(conversation._id)">
-                    <img ng-src="{{conversation.users[1].profileImageRaw}}" class="user-thumb md-padding"
-                         alt="conversation between {{conversation.users[1]}} and {{conversation.recipient.user}}"/>
+                              ng-click="viewConversation(conversation._id)"
+                              ng-init="whoIsRecipient(conversation)">
+
+                    <img ng-src="{{conversation.recipient.profileImageRaw}}" class="user-thumb md-padding"
+                         alt="conversation between {{conversation.user.username}} and {{conversation.recipient.username}}"/>
+
                     <div class="md-list-item-text" layout="column">
-                        <h3>{{ conversation.users[1].username }}</h3>
+                        <h3>{{ conversation.recipient.username }}</h3>
                         <h4>{{ conversation.messages[conversation.messages.length - 1].message.text }}</h4>
                         <p>{{ conversation.messages[conversation.messages.length - 1].createdAt | howLongAgo }}</p>
                     </div>
+
                 </md-list-item>
                 <md-divider></md-divider>
             </md-list>

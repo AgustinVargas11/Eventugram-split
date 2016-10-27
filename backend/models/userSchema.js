@@ -9,15 +9,11 @@ var userSchema = new Schema({
         type: String,
         required: true
     },
-    userDisplayName: String,
     username: {
         type: String,
         unique: true,
-        required: true
-    },
-    profileImage: {
-        type: String,
-        default: '/assets/images/DefaultProf.png'
+        required: true,
+        lowercase: true
     },
     profileImageRaw: {
         type: String,
@@ -47,26 +43,10 @@ var userSchema = new Schema({
         ref: 'Post'
     }],
     notifications: [{
-        user: {
-            type: Schema.Types.ObjectId,
-            user: 'ref'
-        },
-        notificationType: {
-            type: String,
-            enum: ['like', 'message', 'mention']
-        },
-        post: {
-            type: Schema.Types.ObjectId,
-            ref: 'Posts'
-        }
-    }, {timestamps: true}]
+        type: Schema.Types.ObjectId,
+        ref: 'Notification'
+    }]
 }, {timestamps: true});
-
-userSchema.pre('save', function (next) {
-    this.userDisplayName = this.username;
-    this.username = this.userDisplayName.toLowerCase();
-    next();
-});
 
 userSchema.pre('save', function (next) {
     var user = this;

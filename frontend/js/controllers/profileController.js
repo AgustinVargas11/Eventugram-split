@@ -3,35 +3,33 @@
 var app = angular.module('Eventugram');
 
 app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', 'ProfileService', '$location', function ($scope, UserService, DialogService, ProfileService, $location) {
+
     function getUserProfile() {
         ProfileService.getUserProfile()
             .then(function (response) {
                 $scope.user = response;
+                $scope.user.bio = $scope.user.bio || 'add a bio';
                 $scope.posts = response.posts;
             });
     }
-
     getUserProfile();
+
     $scope.openDialog = function (ev, imageUrl) {
         DialogService.changeProfileImage(ev, imageUrl)
-            .then(function () {
-                getUserProfile();
+            .then(function (response) {
+                if (response)
+                    getUserProfile();
             });
     };
 
     $scope.editProfile = function () {
-        $scope.editUser.username = $scope.editUser.userDisplayName;
-
-        $scope.editUser.username = $scope.editUser.username.toLowerCase();
-
-        ProfileService.editUserProfile($scope.editUser).then(function (response) {
-            if (response) {
-                $scope.user = response;
-                $location.path('/profile');
-            } else {
-                alert("We can not reach the server at this time.  Please try again later.");
-            }
-        })
+        ProfileService.editUserProfile($scope.editUser)
+            .then(function (response) {
+                if (response) {
+                    $scope.user = response;
+                    $location.path('/profile');
+                }
+            });
     };
 
     $scope.viewPost = function (id) {

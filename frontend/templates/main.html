@@ -1,10 +1,12 @@
 <!-- MAIN PAGE POSTS ETC -->
 
-<div class="md-padding" layout="column" flex-xs flex-gt-xs="50"
-     flex-offset-gt-xs="25" flex-gt-sm="40" flex-offset-gt-sm="30">
-
-    <div flex-xs flex-gt-xs="50" class="main">
-
+<div class="md-padding" layout="column">
+    <div class="main">
+        <div ng-if="posts.length < 1" layout layout-padding layout-margin>
+            <md-divider></md-divider>
+            <h2>Post something and go make some friends!</h2>
+            <md-divider></md-divider>
+        </div>
         <md-card ng-repeat="post in posts track by $index">
             <md-card-header layout>
                 <md-card-avatar flex="20" ng-click="goToProfile(post.user._id)">
@@ -26,7 +28,7 @@
                         </md-button>
                         <md-menu-content width="3">
                             <md-menu-item ng-repeat="option in options">
-                                <md-button ng-click="option.use(post._id)"><span
+                                <md-button ng-click="option.use(post._id, $parent.$index)"><span
                                         md-menu-align-target>{{option.name}}</span>
                                 </md-button>
                             </md-menu-item>
@@ -83,5 +85,5 @@
             <md-icon><i class="material-icons">more_vert</i></md-icon>
         </md-button>
     </div>
-
 </div>
+

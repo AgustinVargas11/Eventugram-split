@@ -26,7 +26,7 @@ app.service('ProfileService', ['$http', function ($http) {
     };
 
     this.editUserProfile = function (updatedUser) {
-        return $http.put('/api/userprofile/user', updatedUser).then(function (response) {
+        return $http.put('/api/user/userprofile/', updatedUser).then(function (response) {
             return response.data;
         })
     };
@@ -34,9 +34,7 @@ app.service('ProfileService', ['$http', function ($http) {
     this.getFollowing = function () {
         return $http.get('/api/user/following')
             .then(function (response) {
-                console.log(response)
                 return response.data;
             })
     };
-
 }]);

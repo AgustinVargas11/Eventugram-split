@@ -9,7 +9,7 @@ var fs = require('fs');
 
 // MODELS
 var User = require('../models/userSchema');
-var Image = require('../models/imageSchema');
+
 
 userRoute.use('*', multipartyMiddleWare);
 
@@ -24,13 +24,27 @@ userRoute.route('/query')
 
 userRoute.route('/userprofile')
     .get(function (req, res) {
-        User.findById(req.user)
+        User.findById(req.user, '-password')
             .populate({
                 path: 'posts',
                 options: {sort: {'createdAt': -1}}
             })
+            .populate({
+                path: 'notifications',
+                match: {
+                    $or: [{type: 'like'}, {type: 'mention'}, {type: 'comment'}]
+                },
+                populate: {
+                    path: 'post user',
+                    select: 'postImage user username',
+                    populate: {
+                        path: 'user',
+                        select: 'username'
+                    }
+                }
+            })
             .exec(function (err, user) {
-                res.send(user.withoutProps('password'));
+                res.send(user);
             });
     })
     .put(function (req, res) {
@@ -52,30 +66,11 @@ userRoute.route('/userprofile/profileimage/')
             var data = fs.readFileSync(req.files.file.path);
             var contentType = req.files.file.type;
 
-            Image.findOne({user: user}, function (err, foundImage) {
-                if (err) return res.status(500).send(err);
+            foundUser.profileImageRaw = 'data:' + contentType + ';base64,' + data.toString('base64');
 
-                if (foundImage) {
-                    foundImage.remove(function (err) {
-                        if (err) throw err;
-                    });
-                }
-
-                var newImg = {};
-                newImg.profileImage = 'data:' + contentType + ';base64,' + data.toString('base64');
-                newImg.user = req.user;
-                var profileImage = new Image(newImg);
-
-                profileImage.save(function (err) {
-                    if (err) return res.status(500).send(err)
-                });
-
-                foundUser.profileImageRaw = 'data:' + contentType + ';base64,' + data.toString('base64');
-
-                foundUser.save(function (err) {
-                    if (err) throw err;
-                    console.error('saved img to mongo');
-                });
+            foundUser.save(function (err) {
+                if (err) throw err;
+                console.error('saved img to mongo');
             });
         });
     });
@@ -85,7 +80,7 @@ userRoute.route('/profile/:id')
         if (req.params.id === undefined)
             return res.send({message: 'id is undefined'});
 
-        User.findById(req.params.id)
+        User.findById(req.params.id, '-password -email')
             .populate({
                 path: 'posts',
                 options: {sort: {'createdAt': -1}}
@@ -94,7 +89,7 @@ userRoute.route('/profile/:id')
                 if (err) return res.status(500).send(err);
 
                 if (user)
-                    res.send(user.withoutProps('password', 'email'));
+                    res.send(user);
             });
     });
 
@@ -126,7 +121,6 @@ userRoute.route('/following/add/:userId')
                 });
 
                 user.save();
-
                 return res.send({message: 'unfollowed user', code: 1});
             } else {
                 user.following.push(req.params.userId);
@@ -144,9 +138,8 @@ userRoute.route('/following')
     .get(function (req, res) {
         var user = req.user._id;
         User.findById(user)
-            .populate('following', 'username profileImageRaw')
-            .populate('followers', 'username profileImageRaw')
-            .select('username profileImageRaw following')
+            .populate('following followers', 'username profileImageRaw')
+            .select('username profileImageRaw following followers')
             .exec(function (err, user) {
                 if (err) return res.status(500).send(err);
                 res.send(user);

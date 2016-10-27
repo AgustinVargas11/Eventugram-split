@@ -3,6 +3,9 @@
 var app = angular.module('Eventugram');
 
 app.controller('MainController', ['$scope', '$rootScope', '$mdBottomSheet', '$timeout', 'PostService', 'UserService', function ($scope, $rootScope, $mdBottomSheet, $timeout, PostService, UserService) {
+
+    var userId = UserService.getUserId();
+
     $scope.showGridBottomSheet = function () {
         $mdBottomSheet.show({
             templateUrl: '/js/controllers/bottomSheetController/bottomSheet.html',
@@ -17,10 +20,16 @@ app.controller('MainController', ['$scope', '$rootScope', '$mdBottomSheet', '$ti
                 $scope.posts = response;
                 console.log(response)
             });
-    };
-    getPosts();
+    }
 
-    $rootScope.$on('refreshPosts', getPosts);
+    // hide large heart
+    function hideHeart(post) {
+        return post.doubleClick = false;
+    }
+
+    getPosts();
+    // wait for refresh to be emitted then run callback
+    $rootScope.$on('refresh', getPosts);
 
     $scope.addComment = function (post, id, index) {
         PostService.addComment(post.newComment, id)
@@ -42,35 +51,32 @@ app.controller('MainController', ['$scope', '$rootScope', '$mdBottomSheet', '$ti
         PostService.toggleLike(id);
 
         var liked = $scope.didUserLike(post.likes);
-        var like = UserService.getUserId();
+        var like = userId;
         if (!liked) {
             post.likes.push(like);
             post.doubleClick = true;
+            $timeout(hideHeart, 1900, true, post);
         } else {
-            post.likes.splice(post.likes.indexOf(like));
+            $timeout.cancel(hideHeart);
+            post.likes.splice(post.likes.indexOf(like), 1);
         }
-
-        $timeout(function () {
-            post.doubleClick = false;
-        }, 1000);
     };
 
     $scope.didUserLike = function (likes) {
         var user = UserService.getUserId();
-        if (likes.indexOf(user) >= 0)
-            return true;
-        else
-            return false;
+        return (likes.indexOf(user) >= 0);
     };
 
     $scope.options = [
         {
             name: 'delete',
-            use: function (id) {
+            use: function (id, index) {
+                var deletedPost = $scope.posts.splice(index, 1);
                 PostService.deletePost(id)
                     .then(function (response) {
-                        getPosts();
-                    })
+                        if (response.statusText === 500)
+                            $scope.posts.splice(index, 0, deletedPost);
+                    });
             }
         }
     ];

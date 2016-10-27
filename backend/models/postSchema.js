@@ -28,13 +28,4 @@ var postSchema = new Schema({
     }]
 }, {timestamps: true});
 
-postSchema.methods.withoutProps = function () {
-    var post = this.toObject();
-
-    for (var i = 0; i < arguments.length; i++) {
-        delete post.user[arguments[i]];
-    }
-    return post;
-};
-
 module.exports = mongoose.model('Post', postSchema);

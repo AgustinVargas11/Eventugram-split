@@ -1,11 +1,11 @@
 <div ng-cloak>
     <md-content>
         <md-nav-bar ng-show="userService.isLoggedIn()">
-            <div class="brand" flex-offset="5" flex-offset-gt-sm="20" layout layout-align="center center">
+            <div class="brand" layout layout-align="center center" flex="35">
                 <a href="#/main"><img src="./assets/images/Logo.png" alt="" class="logo" hide-xs></a>
                 <span class="brand-title"><a href="#/main">Eventugram</a></span>
             </div>
-            <div layout flex-offset="10" class="search-friends" hide-xs hide-sm>
+            <div layout layout-align="center start" class="search-friends" flex="35" hide-xs hide-sm>
                 <form name="searchUserForm">
                     <md-autocomplete flex
                                      md-require-match="true"
@@ -29,7 +29,8 @@
                     </md-autocomplete>
                 </form>
             </div>
-            <div layout flex-offset="10" flex-offset-sm="40">
+            <div layout flex="50" layout-align="end center" layout-align-gt-md="start center" flex-offset="5" flex-offset-xs="5"
+                 flex-offset-gt-sm="5" flex-gt-xs="70" flex-gt-sm="30">
                 <md-nav-item ng-show="userService.isLoggedIn()" md-nav-href="#/profile">
                     <i class="material-icons">person_outline</i>
                 </md-nav-item>

@@ -5,7 +5,7 @@
         </p>
         <div layout layout-align="start center" class="md-whiteframe-3dp hub" layout-padding>
             <div flex="35" layout layout-align="center center" ng-cloak>
-                <img ng-src="{{ user.profileImageRaw || '/assets/images/DefaultProf.png'}}" alt="profile picture"
+                <img ng-src="{{ user.profileImageRaw}}" alt="profile picture"
                      ng-click="openDialog(ev, user.profileImageRaw)"
                      class="profile-picture" ng-show="user.profileImage">
             </div>

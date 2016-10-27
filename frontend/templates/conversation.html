@@ -1,12 +1,10 @@
-<div class="md-padding" layout="column" flex-xs flex-gt-xs="50"
-     flex-offset-gt-xs="25" flex-gt-sm="40" flex-offset-gt-sm="30">
-    <div flex-gt-sm="50" flex>
+<div class="md-padding" layout="column" flex-xs flex-gt-xs="40" flex-offset-gt-xs="30" flex-gt-sm="40"
+     flex-offset-gt-sm="30">
+    <div flex-gt-sm="50" flex md-whiteframe="z1">
 
-        <md-toolbar layout="row" class="md-accent md-hue-2">
+        <md-toolbar layout="row" class="md-primary md-hue-2" md-whiteframe="1">
             <div layout layout-align="center center" layout-margin>
-                <md-button href="#/messages"
-                           aria-label="back"
-                           class="md-icon-button launch" >
+                <md-button href="#/messages" aria-label="back" class="md-icon-button launch">
                     <md-icon><i class="material-icons title">arrow_back</i></md-icon>
                 </md-button>
             </div>
@@ -18,8 +16,9 @@
         </md-toolbar>
         <md-content class="messages" id="chatBox">
             <md-list flex>
-                <md-list-item class="md-3-line conversation left" ng-repeat="singleMessage in conversation.messages"
-                              ng-class="{right: singleMessage.message.user._id === userService.getUserId()}">
+                <md-list-item class="md-3-line conversation left" ng-repeat="singleMessage in conversation.messages track by $index"
+                              ng-class="{right: singleMessage.message.user._id === userService.getUserId()}"
+                              ng-init=" ($last) ? markAsRead(singleMessage) : false">
                     <img ng-src="{{singleMessage.message.user.profileImageRaw}}" class="user-thumb md-padding"
                          alt="conversation between {{singleMessage.message.user.username}} and {{singleMessage.message.username}}"
                          ng-class="{'flex-order-1': singleMessage.message.user._id === userService.getUserId()}"/>
@@ -31,18 +30,18 @@
                         </div>
                         <p class="small">{{ singleMessage.createdAt | howLongAgo : true }}</p>
                     </div>
+                    <div class="read" ng-if="($last) ? singleMessage.message.readByRecipient : false" layout
+                         layout-align="bottom center">
+                        <i class="material-icons">remove_red_eye</i> <span class="small">{{recipient.username}}</span>
+                    </div>
                 </md-list-item>
-
             </md-list>
         </md-content>
-        <md-toolbar layout="row" layout-align="center center" class="md-accent md-hue-2">
-
-            <form name="newMessageForm" ng-submit="sendNewMessage(recipient._id)" layout flex="95">
-                <input type="text" class="chat" ng-model="messageObj.message.text" placeholder="message"
-                       autofocus>
+        <md-toolbar layout="row" layout-align="center center" class="md-primary md-hue-2">
+            <form name="newMessageForm" ng-submit="sendNewMessage(recipient._id, conversation._id)" layout flex="95">
+                <input type="text" class="chat" ng-model="messageObj.message.text" placeholder="message" autofocus>
                 <md-button type="submit" class="md-raised md-primary md-hue-3 message-button">send</md-button>
             </form>
-
         </md-toolbar>
     </div>
 </div>

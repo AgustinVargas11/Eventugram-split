@@ -17,6 +17,8 @@ app.service('DialogService', ['$mdDialog', 'Upload', function ($mdDialog) {
             targetEvent: ev,
             clickOutsideToClose: true,
             fullscreen: false
+        }).then(function(response) {
+            return {success: true};
         });
     };
 
@@ -52,7 +54,7 @@ app.service('DialogService', ['$mdDialog', 'Upload', function ($mdDialog) {
             }, function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 $scope.closeDialog();
-                $scope.$emit('refreshPosts');
+                $scope.$emit('refresh');
                 console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
             });
         };

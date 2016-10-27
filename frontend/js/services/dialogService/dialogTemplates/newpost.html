@@ -1,4 +1,4 @@
-<md-dialog aria-label="Change profile picture">
+<md-dialog aria-label="Change profile picture" class="new-post">
     <form name="newPostForm" ng-cloak>
         <md-toolbar layout-padding layout layout-align="center center" class="md-primary md-hue-3">
             <div class="image-holder">
@@ -16,7 +16,7 @@
             </md-button>
             <md-button type="submit" ng-click="closeDialog()">Cancel</md-button>
         </md-dialog-actions>
-        <md-input-container ng-show="newPost.postPicture">
+        <md-input-container ng-show="newPost.postPicture" layout-padding>
             <label for="postCaption">add a caption</label>
             <textarea type="text" id="postCaption" name="caption" ng-model="newPost.caption"
                       ng-maxlength="200"></textarea>

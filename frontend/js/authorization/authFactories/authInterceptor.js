@@ -1,6 +1,6 @@
 angular.module("Eventugram.auth")
 
-    .factory("AuthInterceptor", function ($location, $q, TokenService) {
+    .factory("AuthInterceptor", ['$location', '$q', 'TokenService' ,function ($location, $q, TokenService) {
         return {
             request: function (config) {
                 var token = TokenService.getToken();
@@ -20,4 +20,4 @@ angular.module("Eventugram.auth")
                 $q.reject(response);
             }
         };
-    });
+    }]);

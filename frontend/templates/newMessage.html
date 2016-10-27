@@ -1,4 +1,4 @@
-<div class="md-padding" layout="column" flex-xs flex-gt-xs="50"
+<div class="md-padding new-message" layout="column" flex-xs flex-gt-xs="50"
      flex-offset-gt-xs="25" flex-gt-sm="40" flex-offset-gt-sm="30">
     <div flex-gt-sm="50" flex>
 
@@ -23,24 +23,25 @@
             </md-list>
         </md-content>
         <div ng-show="newMessage">
-            <md-content layout="column">
+            <md-content layout="column" layout-padding>
                 <p><b>To:</b></p>
-                <md-list-item class="md-2-line contact-item chip" layout>
+                <md-list-item class="md-2-line contact-item chip" ng-if="!showChip" layout>
                     <img ng-src="{{recipient.profileImageRaw}}" class="user-thumb" alt="{{recipient.username}}"/>
                     <div class="md-list-item-text compact">
                         <b><span>{{recipient.username}}</span></b>
                     </div>
-                    <span><i class="material-icons" layout-padding>close</i></span>
                 </md-list-item>
             </md-content>
-            <md-divider layout-margin></md-divider>
-            <div layout="column" flex="100" flex-gt-sm="60" layout-padding>
+            <md-divider layout-margin layout-padding></md-divider>
+            <div layout="column" flex="100" flex-gt-sm="60">
                 <form name="messageForm" ng-submit="sendMessage(recipient._id)">
                     <md-input-container>
                         <label>message</label>
                         <textarea ng-model="messageObj.message.text" ng-minlength="2" required></textarea>
                     </md-input-container>
-                    <md-button class="md-raised md-accent md-hue-1" type="submit" ng-disabled="messageForm.$invalid">send message</md-button>
+                    <md-button class="md-raised md-accent md-hue-1" type="submit" ng-disabled="messageForm.$invalid">
+                        send message
+                    </md-button>
                 </form>
             </div>
         </div>

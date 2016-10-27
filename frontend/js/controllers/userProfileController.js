@@ -4,16 +4,17 @@ var app = angular.module('Eventugram');
 
 app.controller('UserProfileController', ['$scope', '$routeParams', '$location', 'FollowerService', 'ProfileService', 'UserService', function ($scope, $routeParams, $location, FollowerService, ProfileService, UserService) {
 
+    var userId = UserService.getUserId();
 
     $scope.getUser = function () {
         ProfileService.getOtherUsersProfile($routeParams.userId)
             .then(function (user) {
-                console.log(user)
                 $scope.user = user;
             });
     };
     $scope.getUser();
 
+    // CHECK IF THE USER FOLLOWS THE USER WHO'S PROFILE THEY ARE VISITING
     $scope.checkFollowStatus = function (id) {
         FollowerService.checkFollowStatus(id)
             .then(function (response) {
@@ -24,23 +25,20 @@ app.controller('UserProfileController', ['$scope', '$routeParams', '$location', 
                 }
             })
     };
-
     $scope.checkFollowStatus($routeParams.userId);
 
+
     $scope.notMyProfile = function (id) {
-        if (localStorage['loggedInUserId'] === id) {
+        if (userId === id)
             return false;
-        }
         return true;
     };
 
     $scope.toggleFollow = function (user) {
-        var loggedInUserId = UserService.getUserId();
-
-        if (user.followers.indexOf(loggedInUserId) < 0)
-            user.followers.push(loggedInUserId);
+        if (user.followers.indexOf(userId) < 0)
+            user.followers.push(userId);
         else
-            user.followers.splice(user.followers.indexOf(loggedInUserId), 1);
+            user.followers.splice(user.followers.indexOf(userId), 1);
 
         FollowerService.toggleFollow(user._id)
             .then(function (response) {

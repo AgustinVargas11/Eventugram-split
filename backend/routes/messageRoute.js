@@ -6,6 +6,8 @@ var messageRoute = express.Router();
 // MODELS
 var Message = require('../models/messageSchema');
 var Conversation = require('../models/conversationSchema');
+var User = require('../models/userSchema');
+var Notification = require('../models/notificationSchema');
 
 messageRoute.route('/')
     .get(function (req, res) {
@@ -14,10 +16,11 @@ messageRoute.route('/')
 
         Conversation.find({users: {$in: [user, recipient]}})
             .populate('users')
-            .populate('messages')
+            .populate({
+                path: 'messages'
+            })
             .exec(function (err, conversation) {
                 if (err) return res.status(500).send(err);
-
                 res.send(conversation);
             })
     })
@@ -29,20 +32,46 @@ messageRoute.route('/')
 
         Conversation.findOne({$or: [{users: [newMessage.message.user, newMessage.message.recipient]}, {users: [newMessage.message.recipient, newMessage.message.user]}]}, function (err, conversation) {
             if (err) return res.status(500).send(err);
-            console.log(conversation.users);
+
             if (!conversation) {
                 var conversationObj = {};
                 conversationObj.users = [newMessage.message.user, newMessage.message.recipient];
                 var newConversation = new Conversation(conversationObj);
                 newConversation.messages.push(newMessage);
                 newConversation.save();
-                return res.send(newConversation);
             } else if (conversation) {
                 conversation.messages.push(newMessage);
                 conversation.save();
             }
-            res.send(conversation);
+            User.findById(newMessage.message.recipient, function (err, foundUser) {
+                if (err) return res.status(500).send(err);
+
+                var newNotification = new Notification({
+                    type: 'message',
+                    user: req.user
+                });
+                newNotification.save();
+                foundUser.notifications.unshift(newNotification);
+                if (foundUser.notifications.length > 15)
+                    foundUser.notifications = foundUser.notifications.slice(0, 14);
+                foundUser.save()
+            });
+            res.send(newConversation || conversation);
         });
+    });
+
+messageRoute.route('/markasread/:id')
+    .put(function (req, res) {
+        Message.findById(req.params.id, function (err, message) {
+            if (err) return res.status(500).send(err);
+
+            message.message.readByRecipient = true;
+            message.save(function (err, message) {
+                if (err) return res.status(500).send(err);
+
+                res.send(message);
+            });
+        })
     });
 
 messageRoute.route('/conversations/:id')
@@ -68,8 +97,11 @@ messageRoute.route('/conversations/:id')
 messageRoute.route('/conversations')
     .get(function (req, res) {
         Conversation.find({users: {$in: [req.user._id]}})
+            .sort({'updatedAt': -1})
             .populate('users', 'username profileImageRaw')
-            .populate('messages')
+            .populate({
+                path: 'messages'
+            })
             .exec(function (err, conversations) {
                 if (err) return res.status(500).send(err);
 

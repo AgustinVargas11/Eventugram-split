@@ -4,14 +4,14 @@ var app = angular.module('Eventugram');
 
 app.controller('SinglePostController', ['$scope', '$routeParams', '$timeout', '$location', 'PostService', 'UserService', function ($scope, $routeParams, $timeout, $location, PostService, UserService) {
 
+    var userId = UserService.getUserId();
+
     (function () {
         PostService.getOnePost($routeParams.postId)
             .then(function (response) {
                 $scope.post = response;
                 $scope.didUserLike = function (likes) {
-                    var user = UserService.getUserId();
-
-                    if (likes.indexOf(user) >= 0)
+                    if (likes.indexOf(userId) >= 0)
                         return true;
                     else
                         return false;
@@ -20,14 +20,17 @@ app.controller('SinglePostController', ['$scope', '$routeParams', '$timeout', '$
             })
     }());
 
+    // hide large heart
+    function hideHeart(post) {
+        return post.doubleClick = false;
+    }
+
     $scope.addComment = function (post, id) {
         PostService.addComment(post.newComment, id)
             .then(function (response) {
                 if (response) {
                     var comment = {
-                        user: {
-                            username: UserService.getUsername()
-                        },
+                        user: {username: UserService.getUsername()},
                         comment: response
                     };
                     $scope.post.comments.push(comment);
@@ -40,17 +43,15 @@ app.controller('SinglePostController', ['$scope', '$routeParams', '$timeout', '$
         PostService.toggleLike(id);
 
         var liked = $scope.didUserLike(post.likes);
-        var like = UserService.getUserId();
+        var like = userId;
         if (!liked) {
             post.likes.push(like);
             post.doubleClick = true;
+            $timeout(hideHeart, 1900, true, post);
         } else {
-            post.likes.splice(post.likes.indexOf(like));
+            $timeout.cancel(hideHeart);
+            post.likes.splice(post.likes.indexOf(like), 1);
         }
-
-        $timeout(function () {
-            post.doubleClick = false;
-        }, 1000);
     };
 
     $scope.options = [
@@ -59,11 +60,10 @@ app.controller('SinglePostController', ['$scope', '$routeParams', '$timeout', '$
             use: function (id) {
                 PostService.deletePost(id)
                     .then(function (response) {
-                        $location.path('/main')
+                        if (response)
+                            $location.path('/main')
                     })
             }
         }
     ];
-
-
 }]);

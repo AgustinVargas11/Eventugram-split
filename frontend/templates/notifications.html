@@ -1,0 +1,34 @@
+<div class="md-padding" layout="column" flex-xs flex-gt-xs="40"
+     flex-offset-gt-xs="30" flex-gt-sm="30" flex-offset-gt-sm="35">
+    <div flex-gt-sm="50" flex md-whiteframe="z1">
+
+        <md-toolbar layout="row" class="md-primary md-hue-2" md-whiteframe="1">
+            <div class="md-toolbar-tools">
+                <span class="title">Notifications</span>
+            </div>
+        </md-toolbar>
+
+        <md-content class="notification-container">
+            <md-list class="md-dense" flex>
+                <md-list-item class="md-3-line md-long-text" ng-repeat="notification in notifications"
+                              ng-init="($last) ? sawNotification(notification._id) : false">
+                    <div class="md-list-item-text">
+                        <p class="notification-text" ng-if="notification.type === 'like'">
+                            <b>{{notification.user.username}}</b> liked your photo.
+                        </p>
+                        <p class="notification-text" ng-if="notification.type === 'comment'">
+                            <b>{{notification.user.username}}</b> left a comment on your photo.
+                            <br>
+                            <br>
+                            "{{notification.comment | limitTo: 10}}"
+                        </p>
+                    </div>
+                    <img ng-src="{{notification.post.postImage}}" class="post-thumb" alt="post photo"
+                         ng-click="viewPost(notification.post._id)" ng-if="notification.post.postImage"/>
+                    <md-divider></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-content>
+
+    </div>
+</div>
