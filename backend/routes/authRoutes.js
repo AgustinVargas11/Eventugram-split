@@ -35,10 +35,10 @@ authRoute.route('/signup')
                     } else if (!existingUser) {
                         var newUser = new User(req.body);
                         newUser.following.push('5811ff90a7eea95261661f96');
-                        User.findById('5811ff90a7eea95261661f96', function (err, admin) {
+                        User.findOne({_id: '5811ff90a7eea95261661f96'}, function (err, admin) {
                             if (err) res.status(500).send(err);
 
-                            admin.followers.push(newUser);
+                            admin.followers.push(newUser._id);
                             admin.save();
                         });
                         newUser.save(function (err, savedUser) {
