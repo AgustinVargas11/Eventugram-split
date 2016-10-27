@@ -132,16 +132,16 @@ postRoute.route('/:postId/like')
                         var notificationObj = {
                             type: 'like',
                             user: req.user,
-                            post: post
+                            post: post._id
                         };
                         var newNotification = new Notification(notificationObj);
                         newNotification.save();
 
-                        if (newNotification.post._id !== user.notifications[0].post)
-                            user.notifications.unshift(newNotification);
+                        user.notifications.unshift(newNotification);
 
                         if (user.notifications.length > 15)
                             user.notifications = user.notifications.slice(0, 14);
+
                         user.save();
                     });
                 post.likes.push(like);
@@ -171,9 +171,9 @@ postRoute.route('/delete/:id')
     });
 
 postRoute.route('/:postId/comment/:commentId')
-    .delete(function(req, res) {
-        Post.findById(req.params.postId, function(err, post) {
-           if (err) return res.status(500).send(err);
+    .delete(function (req, res) {
+        Post.findById(req.params.postId, function (err, post) {
+            if (err) return res.status(500).send(err);
 
             post.comments.remove(req.params.commentId);
             post.save();
