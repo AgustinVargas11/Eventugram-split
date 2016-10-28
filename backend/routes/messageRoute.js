@@ -54,7 +54,7 @@ messageRoute.route('/')
                 foundUser.notifications.unshift(newNotification);
                 if (foundUser.notifications.length > 15)
                     foundUser.notifications = foundUser.notifications.slice(0, 14);
-                
+
                 foundUser.save()
             });
             res.send(newConversation || conversation);

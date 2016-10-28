@@ -37,7 +37,6 @@ authRoute.route('/signup')
                         newUser.following.push('5811ff90a7eea95261661f96');
                         User.findOne({_id: '5811ff90a7eea95261661f96'}, function (err, admin) {
                             if (err) res.status(500).send(err);
-
                             admin.followers.push(newUser._id);
                             admin.save();
                         });

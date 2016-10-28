@@ -34,7 +34,6 @@ app.controller('MainController', ['$scope', '$rootScope', '$mdBottomSheet', '$ti
         PostService.addComment(post.newComment, id)
             .then(function (response) {
                 if (response) {
-                    console.log(response)
                     var comment = {
                         _id: response._id,
                         comment: response.comment,
@@ -65,6 +64,8 @@ app.controller('MainController', ['$scope', '$rootScope', '$mdBottomSheet', '$ti
     };
 
     $scope.didUserLike = function (likes) {
+        if (!likes)
+            return;
         var user = UserService.getUserId();
         return (likes.indexOf(user) >= 0);
     };

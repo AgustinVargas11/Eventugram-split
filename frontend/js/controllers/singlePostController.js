@@ -10,6 +10,10 @@ app.controller('SinglePostController', ['$scope', '$routeParams', '$timeout', '$
         PostService.getOnePost($routeParams.postId)
             .then(function (response) {
                 $scope.post = response;
+                $scope.didUserLike = function (likes) {
+                    var user = UserService.getUserId();
+                    return (likes.indexOf(user) >= 0);
+                };
             });
     }());
 
@@ -35,11 +39,6 @@ app.controller('SinglePostController', ['$scope', '$routeParams', '$timeout', '$
     function hideHeart(post) {
         return post.doubleClick = false;
     }
-
-    $scope.didUserLike = function (likes) {
-        var user = UserService.getUserId();
-        return (likes.indexOf(user) >= 0);
-    };
 
     $scope.likePost = function (post, id) {
         PostService.toggleLike(id);
