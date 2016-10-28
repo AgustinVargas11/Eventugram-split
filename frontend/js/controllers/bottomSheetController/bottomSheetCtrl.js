@@ -6,9 +6,9 @@ app.controller('BottomSheetController', ['$scope', '$mdBottomSheet', '$location'
 
     function createNotificationCondition(type) {
         var notifications = $scope.user.notifications;
-        var lastMessage = notifications[notifications.length - 1];
+        var firstMessage = notifications[0];
         if (notifications.length)
-            return !lastMessage.seen && lastMessage.type === type && lastMessage.user !== UserService.getUserId();
+            return !firstMessage.seen && firstMessage.type === type && firstMessage.user !== UserService.getUserId();
     }
     ProfileService.getUserProfile()
         .then(function (response) {
@@ -22,10 +22,10 @@ app.controller('BottomSheetController', ['$scope', '$mdBottomSheet', '$location'
                     use: function () {
                         $location.path('/messages');
                         var notifications = $scope.user.notifications;
-                        var lastMessage = notifications[notifications.length - 1];
+                        var firstMessage = notifications[0];
 
                         if (notifications.length)
-                            NotificationService.markAsSeen(lastMessage._id);
+                            NotificationService.markAsSeen(firstMessage._id);
                         $mdBottomSheet.hide();
                     },
                     notificationCondition: function () {

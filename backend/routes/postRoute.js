@@ -55,11 +55,10 @@ postRoute.route('/')
             User.findById(req.user._id, function (err, foundUser) {
                 foundUser.posts.push(newPost);
                 foundUser.save(function (err) {
-                    if (err) {
-                        return res.status(500).send(err);
-                    }
+                    if (err) return res.status(500).send(err);
                 });
             });
+            res.send({success: true, message: 'Photo posted successfully'});
         });
     });
 
@@ -126,7 +125,7 @@ postRoute.route('/:postId/like')
             if (post.likes.indexOf(like) >= 0) {
                 post.likes.remove(like);
             } else {
-                User.findById(post.user)
+                User.findById(post.user, '-profileImageRaw')
                     .populate('notifications')
                     .exec(function (err, user) {
                         var notificationObj = {

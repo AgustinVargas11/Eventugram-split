@@ -1,8 +1,8 @@
 <div ng-cloak>
-    <md-content>
+    <md-content ng-if="!checkIfChat()">
         <md-nav-bar ng-show="userService.isLoggedIn()" aria-label="navbar">
             <div class="brand" layout layout-align="center center" flex="35">
-                <a href="#/main"><img src="./assets/images/Logo.png" alt="" class="logo" hide-xs></a>
+                <a href="#/main"><img src="./assets/images/Logo.png" alt="logo" class="logo" hide-xs></a>
                 <span class="brand-title"><a href="#/main">Eventugram</a></span>
             </div>
             <div layout layout-align="center start" class="search-friends" flex="35" hide-xs hide-sm>

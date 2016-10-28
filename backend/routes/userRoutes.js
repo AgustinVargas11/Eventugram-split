@@ -31,9 +31,6 @@ userRoute.route('/userprofile')
             })
             .populate({
                 path: 'notifications',
-                match: {
-                    $or: [{type: 'like'}, {type: 'mention'}, {type: 'comment'}]
-                },
                 populate: {
                     path: 'post user',
                     select: 'postImage user username',
@@ -72,6 +69,7 @@ userRoute.route('/userprofile/profileimage/')
                 if (err) throw err;
                 console.error('saved img to mongo');
             });
+            res.send({success: true, message: 'Profile image changed'})
         });
     });
 

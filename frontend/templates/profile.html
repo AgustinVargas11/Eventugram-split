@@ -3,14 +3,14 @@
         <p>
             <small><a href="#/profile/edit">edit profile</a></small>
         </p>
-        <div layout layout-align="start center" class="md-whiteframe-3dp hub" layout-padding>
-            <div flex="35" layout layout-align="center center" ng-cloak>
+        <div layout layout-align="start center" class="md-whiteframe-3dp hub" layout-padding ng-cloak>
+            <div flex="35" layout layout-align="center center">
                 <img ng-src="{{user.profileImageRaw}}" alt="profile picture"
                      ng-click="openDialog(ev, user.profileImageRaw)"
                      class="profile-picture">
             </div>
             <div flex="60">
-                <div layout="column" layout-align="start start" layout-padding class="hub-info">
+                <div layout="column" layout-align="start start" layout-padding class="hub-info" ng-cloak>
                     <div>
                         <p class="username">{{user.username}}</p>
                     </div>
@@ -32,7 +32,7 @@
         </div>
         <div layout layout-wrap>
             <div ng-repeat="post in posts" class="profile-post" flex="33" ng-click="viewPost(post._id)"
-                 ng-mouseenter="showLikes=true" ng-mouseleave="showLikes=false">
+                 ng-mouseenter="showLikes=true" ng-mouseleave="showLikes=false" ng-cloak>
                 <div class="overlay" layout layout-align="center center" ng-show="showLikes"><i class="material-icons">favorite</i><span
                         class="likes">{{post.likes.length}}</span></div>
                 <img ng-src="{{post.postImage}}" alt="post">

@@ -16,9 +16,11 @@
         </md-toolbar>
         <md-content class="messages" id="chatBox">
             <md-list flex>
-                <md-list-item class="md-3-line conversation left" ng-repeat="singleMessage in conversation.messages track by $index"
+                <md-list-item class="md-3-line conversation left"
+                              ng-repeat="singleMessage in conversation.messages track by $index"
                               ng-class="{right: singleMessage.message.user._id === userService.getUserId()}"
-                              ng-init=" ($last) ? markAsRead(singleMessage) : false">
+                              ng-init=" ($last) ? markAsRead(singleMessage) : false"
+                              id="{{($last) ? 'last' : null}}">
                     <img ng-src="{{singleMessage.message.user.profileImageRaw}}" class="user-thumb md-padding"
                          alt="conversation between {{singleMessage.message.user.username}} and {{singleMessage.message.username}}"
                          ng-class="{'flex-order-1': singleMessage.message.user._id === userService.getUserId()}"/>
@@ -38,7 +40,7 @@
             </md-list>
         </md-content>
         <md-toolbar layout="row" layout-align="center center" class="md-primary md-hue-2">
-            <form name="newMessageForm" ng-submit="sendNewMessage(recipient._id, conversation._id)" layout flex="95">
+            <form name="newMessageForm" ng-submit="sendNewMessage(recipient._id, conversation._id)" layout flex="95" ng-init="messageObj.message.user = user">
                 <input type="text" class="chat" ng-model="messageObj.message.text" placeholder="message" autofocus>
                 <md-button type="submit" class="md-raised md-primary md-hue-3 message-button">send</md-button>
             </form>

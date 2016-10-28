@@ -17,13 +17,15 @@ app.service('DialogService', ['$mdDialog', 'Upload', function ($mdDialog) {
             targetEvent: ev,
             clickOutsideToClose: true,
             fullscreen: false
+        }).then(function () {
+            return {success: true};
         });
     };
 
     this.newPost = function (ev) {
         var template = '/js/services/dialogService/dialogTemplates/newpost.html';
         self.url = '/api/post/';
-           $mdDialog.show({
+        $mdDialog.show({
             controller: DialogController,
             templateUrl: template,
             parent: angular.element(document.body),
@@ -54,7 +56,7 @@ app.service('DialogService', ['$mdDialog', 'Upload', function ($mdDialog) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 $scope.closeDialog();
                 console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-            });
+            })
         };
 
         $scope.imageUrl = self.data;

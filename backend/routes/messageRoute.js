@@ -43,7 +43,7 @@ messageRoute.route('/')
                 conversation.messages.push(newMessage);
                 conversation.save();
             }
-            User.findById(newMessage.message.recipient, function (err, foundUser) {
+            User.findById(newMessage.message.recipient, '-profileImageRaw', function (err, foundUser) {
                 if (err) return res.status(500).send(err);
 
                 var newNotification = new Notification({

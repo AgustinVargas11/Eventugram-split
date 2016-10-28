@@ -15,10 +15,16 @@ app.directive('navbar', ['UserService', '$location', function (UserService, $loc
                 return $http.get("/api/user/query", {params: {username: query}})
                     .then(function (response) {
                         return response.data;
-                    }).catch(function(e) {console.log(e)})
+                    }).catch(function (e) {
+                        console.log(e)
+                    })
             };
 
-            $scope.goToProfile = function(id) {
+            $scope.checkIfChat = function () {
+                return !!$location.path().match(/conversation/)
+            };
+
+            $scope.goToProfile = function (id) {
                 if (!id)
                     return;
                 searchUserForm.reset();
