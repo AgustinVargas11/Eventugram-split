@@ -47,11 +47,11 @@ app.service('DialogService', ['$mdDialog', 'Upload', function ($mdDialog) {
                 data: data
             }).then(function (response) {
                 console.log('Success ' + response.config.data.file.name + 'uploaded. Response: ' + response.data);
+                $scope.$emit('refresh');
             }, function (response) {
                 console.log('Error status: ' + response.status);
             }, function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                $scope.$emit('refresh');
                 $scope.closeDialog();
                 console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
             });
