@@ -14,7 +14,7 @@ app.controller('SinglePostController', ['$scope', '$routeParams', '$timeout', '$
                     var user = UserService.getUserId();
                     return (likes.indexOf(user) >= 0);
                 };
-            });
+            }).catch(function(e) {console.log(e)});
     }());
 
     $scope.addComment = function (post, id, index) {
@@ -31,7 +31,7 @@ app.controller('SinglePostController', ['$scope', '$routeParams', '$timeout', '$
                     };
                     $scope.posts[index].comments.push(comment);
                 }
-            });
+            }).catch(function(e) {console.log(e)});
         post.newComment = '';
     };
 
@@ -41,7 +41,7 @@ app.controller('SinglePostController', ['$scope', '$routeParams', '$timeout', '$
     }
 
     $scope.likePost = function (post, id) {
-        PostService.toggleLike(id);
+        PostService.toggleLike(id).catch(function(e) {console.log(e)});
 
         var liked = $scope.didUserLike(post.likes);
         var like = userId;

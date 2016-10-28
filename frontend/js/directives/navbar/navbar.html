@@ -1,6 +1,6 @@
 <div ng-cloak>
     <md-content>
-        <md-nav-bar ng-show="userService.isLoggedIn()">
+        <md-nav-bar ng-show="userService.isLoggedIn()" aria-label="navbar">
             <div class="brand" layout layout-align="center center" flex="35">
                 <a href="#/main"><img src="./assets/images/Logo.png" alt="" class="logo" hide-xs></a>
                 <span class="brand-title"><a href="#/main">Eventugram</a></span>
@@ -31,13 +31,13 @@
             </div>
             <div layout flex="50" layout-align="end center" layout-align-gt-md="start center" flex-offset="5" flex-offset-xs="5"
                  flex-offset-gt-sm="5" flex-gt-xs="70" flex-gt-sm="30">
-                <md-nav-item ng-show="userService.isLoggedIn()" md-nav-href="#/profile">
+                <md-nav-item ng-show="userService.isLoggedIn()" md-nav-href="#/profile" aria-label="profile">
                     <i class="material-icons">person_outline</i>
                 </md-nav-item>
-                <md-nav-item ng-show="userService.isLoggedIn()" md-nav-href="#/friends">
+                <md-nav-item ng-show="userService.isLoggedIn()" md-nav-href="#/friends" aria-label="friends">
                     <i class="material-icons">people</i>
                 </md-nav-item>
-                <md-nav-item ng-show="userService.isLoggedIn()" md-nav-click="userService.logout()">
+                <md-nav-item ng-show="userService.isLoggedIn()" md-nav-click="userService.logout()" aria-label="logout">
                     <i class="material-icons">directions_walk</i>
                 </md-nav-item>
             </div>

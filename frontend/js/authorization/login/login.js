@@ -16,6 +16,6 @@ angular.module("Eventugram.auth")
                             }
                         }
                     }
-                })
+                }).catch(function(e) {console.log(e)})
         };
     }]);

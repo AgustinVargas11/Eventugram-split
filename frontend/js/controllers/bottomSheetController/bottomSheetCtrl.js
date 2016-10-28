@@ -14,7 +14,7 @@ app.controller('BottomSheetController', ['$scope', '$mdBottomSheet', '$location'
         .then(function (response) {
             $scope.user = response;
         })
-        .finally(function () {
+        .then(function () {
             $scope.items = [
                 {
                     name: 'inbox',
@@ -52,5 +52,5 @@ app.controller('BottomSheetController', ['$scope', '$mdBottomSheet', '$location'
                     }
                 }
             ];
-        });
+        }).catch(function(e) {console.log(e)});
 }]);

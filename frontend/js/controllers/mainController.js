@@ -18,7 +18,7 @@ app.controller('MainController', ['$scope', '$rootScope', '$mdBottomSheet', '$ti
         PostService.getFollowingPosts()
             .then(function (response) {
                 $scope.posts = response;
-            });
+            }).catch(function(e) {console.log(e)});
     }
 
     // hide large heart
@@ -44,12 +44,12 @@ app.controller('MainController', ['$scope', '$rootScope', '$mdBottomSheet', '$ti
                     };
                     $scope.posts[index].comments.push(comment);
                 }
-            });
+            }).catch(function(e) {console.log(e)});
         post.newComment = '';
     };
 
     $scope.likePost = function (post, id) {
-        PostService.toggleLike(id);
+        PostService.toggleLike(id).catch(function(e) {console.log(e)});
 
         var liked = $scope.didUserLike(post.likes);
         var like = userId;
@@ -99,6 +99,6 @@ app.controller('MainController', ['$scope', '$rootScope', '$mdBottomSheet', '$ti
             .then(function (response) {
                 // if (response.status !== 200)
                 //     $scope.posts[postIndex].comments.splice(commentIndex, 0, deletedComment);
-            });
+            }).catch(function(e) {console.log(e)});
     };
 }]);

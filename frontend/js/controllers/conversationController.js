@@ -16,7 +16,7 @@ app.controller('ConversationController', ['$scope', '$routeParams', '$timeout', 
             MessageService.markAsRead(message._id)
                 .then(function (response) {
                     $scope.read = true;
-                });
+                }).catch(function(e) {console.log(e)});
     };
 
     $timeout(scrollToBottom, 120);
@@ -35,7 +35,7 @@ app.controller('ConversationController', ['$scope', '$routeParams', '$timeout', 
             io.connect();
             io.joinPrivateChat($scope.conversation._id);
             io.listen($scope.addMessage);
-        });
+        }).catch(function(e) {console.log(e)});
 
     $scope.sendNewMessage = function (userId, convoId) {
         $scope.messageObj.message.recipient = userId;

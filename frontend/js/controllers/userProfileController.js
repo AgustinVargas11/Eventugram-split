@@ -10,8 +10,7 @@ app.controller('UserProfileController', ['$scope', '$routeParams', '$location', 
         ProfileService.getOtherUsersProfile($routeParams.userId)
             .then(function (user) {
                 $scope.user = user;
-                console.log(user)
-            });
+            }).catch(function(e) {console.log(e)});
     };
     $scope.getUser();
 
@@ -24,7 +23,7 @@ app.controller('UserProfileController', ['$scope', '$routeParams', '$location', 
                 } else {
                     $scope.button = 'following';
                 }
-            })
+            }).catch(function(e) {console.log(e)})
     };
     $scope.checkFollowStatus($routeParams.userId);
 
@@ -47,7 +46,7 @@ app.controller('UserProfileController', ['$scope', '$routeParams', '$location', 
                     $scope.button = 'following';
                 else
                     $scope.button = 'follow';
-            })
+            }).catch(function(e) {console.log(e)})
     };
 
     $scope.viewPost = function (id) {

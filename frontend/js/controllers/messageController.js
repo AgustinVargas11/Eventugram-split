@@ -11,14 +11,14 @@ app.controller('MessageController', ['$scope', '$location', 'MessageService', 'P
                 $scope.allUsers = response.following.map(function (a) {
                     return a;
                 });
-            });
+            }).catch(function(e) {console.log(e)});
     }
 
     function getConversations() {
         MessageService.getConversations()
             .then(function (response) {
                 $scope.conversations = response;
-            })
+            }).catch(function(e) {console.log(e)})
     }
 
     $scope.whoIsRecipient = function (conversation) {
@@ -54,7 +54,7 @@ app.controller('MessageController', ['$scope', '$location', 'MessageService', 'P
             .then(function (response) {
                 $location.path('/conversation/' + response._id);
                 getConversations();
-            });
+            }).catch(function(e) {console.log(e)});
     };
 
     $scope.viewConversation = function (id) {

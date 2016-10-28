@@ -7,6 +7,6 @@ app.service('NotificationService', ['$http', function ($http) {
         return $http.put('/api/notification/' + id + '/markasseen')
             .then(function (response) {
                 return response.data;
-            })
+            }).catch(function(e) {console.log(e)})
     };
 }]);

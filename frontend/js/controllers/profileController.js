@@ -9,7 +9,7 @@ app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', '
             .then(function (response) {
                 $scope.user = response;
                 $scope.posts = response.posts;
-            });
+            }).catch(function(e) {console.log(e)});
     }
 
     getUserProfile();
@@ -19,7 +19,7 @@ app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', '
             .then(function (response) {
                 if (response)
                     getUserProfile();
-            });
+            }).catch(function(e) {console.log(e)});
     };
 
     $scope.editProfile = function () {
@@ -29,7 +29,7 @@ app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', '
                     $scope.user = response;
                     $location.path('/profile');
                 }
-            });
+            }).catch(function(e) {console.log(e)});
     };
 
     $scope.viewPost = function (id) {

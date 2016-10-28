@@ -8,6 +8,8 @@ app.service('ProfileService', ['$http', function ($http) {
         return $http.get('/api/user/userprofile')
             .then(function (response) {
                 return response.data;
+            }).catch(function (e) {
+                console.log(e)
             });
     };
 
@@ -15,6 +17,8 @@ app.service('ProfileService', ['$http', function ($http) {
         return $http.get('/api/user/getAll')
             .then(function (response) {
                 return response.data;
+            }).catch(function (e) {
+                console.log(e)
             })
     };
 
@@ -22,12 +26,16 @@ app.service('ProfileService', ['$http', function ($http) {
         return $http.get('/api/user/profile/' + id)
             .then(function (response) {
                 return response.data;
+            }).catch(function (e) {
+                console.log(e)
             });
     };
 
     this.editUserProfile = function (updatedUser) {
         return $http.put('/api/user/userprofile/', updatedUser).then(function (response) {
             return response.data;
+        }).catch(function (e) {
+            console.log(e)
         })
     };
 
@@ -35,6 +43,8 @@ app.service('ProfileService', ['$http', function ($http) {
         return $http.get('/api/user/following')
             .then(function (response) {
                 return response.data;
+            }).catch(function (e) {
+                console.log(e)
             })
     };
 }]);

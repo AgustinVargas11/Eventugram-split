@@ -10,7 +10,7 @@ angular.module("Eventugram.auth")
                 } else {
                     return response.data;
                 }
-            })
+            }).catch(function(e) {console.log(e)})
         };
 
         this.getUsername = function() {
@@ -33,7 +33,7 @@ angular.module("Eventugram.auth")
                         return response.data;
                     }
                 }
-            });
+            }).catch(function(e) {console.log(e)});
         };
 
         this.logout = function () {
